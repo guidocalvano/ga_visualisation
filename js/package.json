@@ -1,11 +1,10 @@
 {
   "dependencies": {
-    "@react-three/drei": "^9.117.2",
-    "@react-three/fiber": "^8.17.10",
+    "@react-three/drei": "^9.121.4",
+    "@react-three/fiber": "^8.17.12",
     "@rollup/plugin-commonjs": "^28.0.2",
     "@rollup/plugin-node-resolve": "^16.0.0",
     "@rollup/plugin-replace": "^6.0.2",
-    "esbuild": "^0.24.2",
-    "rollup": "^4.31.0"
+    "rollup": "^4.32.0"
   }
 }

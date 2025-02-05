@@ -55453,7 +55453,7 @@ function createRenderer(_roots, _getEventPriority) {
 
     // Auto-attach geometries and materials
     if (instance.__r3f.attach === undefined) {
-      if (instance instanceof BufferGeometry) instance.__r3f.attach = 'geometry';else if (instance instanceof Material) instance.__r3f.attach = 'material';
+      if (instance.isBufferGeometry) instance.__r3f.attach = 'geometry';else if (instance.isMaterial) instance.__r3f.attach = 'material';
     }
 
     // It should NOT call onUpdate on object instanciation, because it hasn't been added to the
@@ -56128,7 +56128,8 @@ function applyProps$1(instance, data) {
       // If nothing else fits, just set the single value, ignore undefined
       // https://github.com/pmndrs/react-three-fiber/issues/274
       else if (value !== undefined) {
-        const isColor = targetProp instanceof Color;
+        var _targetProp;
+        const isColor = (_targetProp = targetProp) == null ? undefined : _targetProp.isColor;
         // Allow setting array scalars
         if (!isColor && targetProp.setScalar) targetProp.setScalar(value);
         // Layers have no copy function, we must therefore copy the mask property
@@ -56142,11 +56143,12 @@ function applyProps$1(instance, data) {
       }
       // Else, just overwrite the value
     } else {
+      var _currentInstance$key;
       currentInstance[key] = value;
 
       // Auto-convert sRGB textures, for now ...
       // https://github.com/pmndrs/react-three-fiber/issues/344
-      if (currentInstance[key] instanceof Texture &&
+      if ((_currentInstance$key = currentInstance[key]) != null && _currentInstance$key.isTexture &&
       // sRGB textures must be RGBA8 since r137 https://github.com/mrdoob/three.js/pull/23129
       currentInstance[key].format === RGBAFormat && currentInstance[key].type === UnsignedByteType && rootState) {
         const texture = currentInstance[key];
@@ -56646,7 +56648,7 @@ const createStore = (invalidate, advance) => {
         left
       } = size;
       const aspect = width / height;
-      if (target instanceof Vector3) tempTarget.copy(target);else tempTarget.set(...target);
+      if (target.isVector3) tempTarget.copy(target);else tempTarget.set(...target);
       const distance = camera.getWorldPosition(position).distanceTo(tempTarget);
       if (isOrthographicCamera(camera)) {
         return {
@@ -57295,7 +57297,7 @@ function createRoot(canvas) {
       // Set up scene (one time only!)
       if (!state.scene) {
         let scene;
-        if (sceneOptions instanceof Scene) {
+        if (sceneOptions != null && sceneOptions.isScene) {
           scene = sceneOptions;
         } else {
           scene = new Scene();
